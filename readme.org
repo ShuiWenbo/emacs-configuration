@@ -117,3 +117,20 @@ noraml 模式下 使用 spc m x 对任务标记完成
   (setq org-appear-autokeywords    t )
   (setq org-appear-inside-latex    t ))
 #+end_src
+* git 代码提交
+先在github 中建一个仓库，再在.ssh 目录中使用ssh-keygen 配置公私钥并在github 里面上传公钥。
+** 这是全新的仓库的提交方式
+#+begin_src shell
+    git init
+    git add .
+    git commit -m "first commit"
+    git branch -M main
+    git remote add origin git@github.com:ShuiWenbo/emacs-configuration.git
+    git push -u origin main
+#+end_src
+*** 需要在.ssh/config 中配置
+#+begin_src
+Host github.com
+    Hostname ssh.github.com
+    Port 443
+#+end_src
