@@ -1,0 +1,119 @@
+#+title:  Example Org File
+#+author: TEC
+#+date:   <2025-08-27 09:49>
+#+HTML_HEAD: <script src  = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+#+HTML_HEAD: <script src  = "https://emacs-1308440781.cos.ap-chengdu.myqcloud.com/classic/scroll.js"></script>
+#+HTML_HEAD: <script src  = "https://emacs-1308440781.cos.ap-chengdu.myqcloud.com/classic/tex-mml-chtml.js"></script>
+#+HTML_HEAD: <link   href = "https://emacs-1308440781.cos.ap-chengdu.myqcloud.com/classic/base.css" rel="stylesheet" type="text/css"></link>
+#+OPTIONS: prop:nil timestamp:t \n:t ^:nil f:t toc:t author:t num:t H:2
+#+LATEX_COMPILER: xelatex
+#+LATEX_CLASS: elegantpaper
+#+latex:\newpage
+
+* vim
+编辑前明确自己处于哪种模式，normal 模式用于移动光标至想要编辑的位置，insert 模式用于编辑想要编辑的内容，visual 模式用于选中内容用于复制或者删除
++ i 在光标前插入
++ a 在光标后插入
++ A 在行末尾插入
++ D 删除至行末尾
++ dd 删除整行
++ x 将内容剪切到剪切板
++ yy 复制整行
++ o 换行
++ V 进入行选择模式
++ f 进入查找模式
++ ; g 光标移动至行末尾
++ ; a 光标移动至行开头
++ 在normal模式下使用r 进入replace 模式
++ C-c * 将文本做成大纲
++ > 层级增加，< 层级减少
++ insert 模式下 C-p 近期剪切板
+- spc < consult-buffer
+* org mode
+** 大纲
+- 大纲，用*作为目录，*为一级目录，**为二级目录，以此类推
+- 使用tab对大纲进行折叠
+- z r，收起全部，z R展开全部
+*** 三级
+**** 四级
+** 输入法
+- 在emacs中使用rimelib输入法，并且使用简配输入法，使用~/.hammerspoon/init.lua 将按键做如下映射：
+使用按键C-；在emacs中映射为C-，
+#+begin_src elisp
+(map! :map (minibuffer-local-map)
+      "C-," 'toggle-input-method)
+#+end_src
+- 使用按键C-；在非emacs中映射为C-z，将C-z映射为系统输入法的切换键
+** 代码嵌入
+#+begin_src javascript
+var l = 1
+#+end_src
+** 导出HTML
+在emacs中打开文件后缀为.org的文件时，默认会进入orgmode
+orgmode可以导出htmi，latex，markdown等其他
+1. 使用spc m e 进入导出面板
+2. 使用h进入html子选项
+3. 使用o将当前org文件导出为html文件并打开
+** format
+| 按键                | 说明               |
+| i                   | 在光标前插入       |
+| a                   | 在光标后插入       |
+| A                   | 在行末尾插入       |
+| D                   | 删除至行末尾       |
+| dd                  | 删除整行           |
+| x                   | 将内容剪切到剪切板 |
+| yy                  | 复制整行           |
+| o                   | 换行               |
+| V                   | 进入行选择模式     |
+| f                   | 进入查找模式       |
+| ; g                 | 光标移动至行末尾   |
+| ; a                 | 光标移动至行开头   |
+| C-c *               | 将文本做成大纲     |
+| 在normal模式下使用r | 进入replace 模式                   |
+|                     |                    |
+|                     |                    |
+|                     |                    |
+|                     |                    |
+|                     |                    |
+|                     |                    |
+
+** TODO [#A] todolist
+不区分模式，日期增加 C-c .
+normal 模式下 在大纲上使用 shift-ctrl-l/h来选择大纲的任务状态
+normal 模式下 在大纲上使用 shift-ctrl-j/k来选择大纲的任务等级
+noraml 模式下 使用 spc m x 对任务标记完成
+- [X] 数学分析 <2025-08-26 二>
+- [ ] 高等代数 <2025-08-26 二>
+- [ ] 中国文化概况 <2025-08-26 二>
+** TODO [#B] todolist
+- [X] 练腿 <2025-08-26 二>
+- [ ] 核心 <2025-08-26 Tue> 
+** 输入法
+- 中文后有空格，自动进入临时英文模式.
+- 英文字母后自动进入临时英文模式.
+- 断言函数自取 https://github.com/DogLooksGood/emacs-rime
+** 增加链接
+#+begin_src org
+[[https://github.com/DogLooksGood/][function]]
+#+end_src
+- url 引用
+[[https://github.com/DogLooksGood/][function]]
+- 文件 引用
+   [[/Users/skgia/.config/doom/readme.org]]
+- 图片 引用
+  https://avatars.githubusercontent.com/u/226496348?v=4&size=64.png
+* emacs 安装包
+以安装org-appear为例，
+先在package.el 中敲入 (package! org-appear          ) 以安装安装包
+再在config.el 中敲入
+#+begin_src elisp
+(use-package org-appear
+  :defer t
+  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autolinks       t )
+  (setq org-appear-autosubmarkers  t )
+  (setq org-appear-autoentities    t )
+  (setq org-appear-autokeywords    t )
+  (setq org-appear-inside-latex    t ))
+#+end_src
