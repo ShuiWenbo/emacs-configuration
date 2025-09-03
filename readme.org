@@ -10,6 +10,30 @@
 #+LATEX_CLASS: elegantpaper
 #+latex:\newpage
 
+* linux
+- pwd
+- ls
+- cd    直接输入 cd 是回到 home 目录
+- clear
+- history
+- touch    创建文件
+- cat    输出文件内容 cat -b 可以开启行号
+  且可以使用 head -n 和 tail -n 来仅查看文件首位若干行
+- mv    文件重命名或将文件移入其他目录
+  例如：mv hello.txt mamba.txt   以及   mv mamba.txt /
+- rm    删除文件
+  rm *.txt 可用于批量删除以txt结尾的文件
+- mkdir    创建目录
+- rmdir    删除目录
+-
+
+* emacs
+* doom emacs 的安装
+** emacs 的安装
+** doom emacs 的安装
+* 改键软件
+** karabiner
+** hammerspoon
 * vim
 编辑前明确自己处于哪种模式，normal 模式用于移动光标至想要编辑的位置，insert 模式用于编辑想要编辑的内容，visual 模式用于选中内容用于复制或者删除
 + i 在光标前插入
@@ -139,4 +163,53 @@ Host github.com
 git add .
 git commit -m "doc: "
 git push
+#+end_src
+
+* python lsp 配置
+** lsp 是什么
+** pyright 在doom emacs 中的安装，及存在的问题
+** pylsp 的安装及配置
+https://emacs-lsp.github.io/lsp-mode/page/lsp-pylsp/
+** TODO 用 python 编写一个 9*9 乘法表
+** lsp 相关的函数和快捷键
+** python 语言服务的安装
+#+begin_src shell
+brew install ruff
+pip install pyright
+#+end_src
+[[https://microsoft.github.io/pyright/#/installation][pyright 文档]]
+[[https://docs.astral.sh/ruff/installation/][ruff 文档]]
+** 格式化：normal spc f b 全部格式化
+** visual spc f g 本行格式化
+** spc c d 跳转到定义
+** spc c i 跳转到实现 (+lookup/implementations IDENTIFIER &optional ARG)
+** corfu 的代码补全
+packages.el 中
+#+begin_src elisp
+(package! kind-icon           )
+#+end_src
+config.el 中
+#+begin_src elisp
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  (kind-icon-blend-background t)
+                                        ; (kind-icon-default-face 'corfu-default) ; only needed with blend-background
+  :config
+  (setq kind-icon-use-icons  t
+        corfu-count          7    )
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+(after! corfu
+  (corfu-popupinfo-mode -1)              ; 强制禁用
+  (setq corfu-popupinfo-delay nil        ; 禁止延迟触发
+        corfu-popupinfo-hide t           ; 隐藏可能残留的弹窗
+        corfu-auto                t
+        corfu-preselect           'first
+        corfu-bar-width           0.3
+        corfu-quit-at-boundary    nil
+        corfu-quit-no-match       nil
+        corfu-popupinfo-max-width 0      ; 确保弹窗尺寸为零
+        corfu-popupinfo-max-height 0))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src

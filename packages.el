@@ -51,3 +51,4 @@
 (package! liberime            )
 (package! org-modern          )
 (package! org-appear          )
+(package! kind-icon           )

@@ -77,6 +77,7 @@
 ;; they are implemented.
 ;;这个地方配置快捷键
 (map! :ne "; f"    'dirvish)
+(map! :map dirvish-mode-map :ne "; f" #'+dired/quit-all      )
 (map! :ne "; w"    'save-buffer)
 (after! dired
   (map! :map dired-mode-map
@@ -171,3 +172,34 @@
   (setq org-appear-autoentities    t )
   (setq org-appear-autokeywords    t )
   (setq org-appear-inside-latex    t ))
+
+(setenv "PATH" (getenv "PATH"))
+(add-to-list 'exec-path "/Users/skgia/.pyenv/shims/pylsp")
+
+(setq lsp-pylsp-plugins-autopep8-enabled t)
+(map! :after lsp-mode
+      :map   lsp-mode-map
+      :n "SPC f b" #'lsp-format-buffer
+      :v "SPC f g" #'lsp-format-region)
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  (kind-icon-blend-background t)
+                                        ; (kind-icon-default-face 'corfu-default) ; only needed with blend-background
+  :config
+  (setq kind-icon-use-icons  t
+        corfu-count          7    )
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+(after! corfu
+  (corfu-popupinfo-mode -1)              ; 强制禁用
+  (setq corfu-popupinfo-delay nil        ; 禁止延迟触发
+        corfu-popupinfo-hide t           ; 隐藏可能残留的弹窗
+        corfu-auto                t
+        corfu-preselect           'first
+        corfu-bar-width           0.3
+        corfu-quit-at-boundary    nil
+        corfu-quit-no-match       nil
+        corfu-popupinfo-max-width 0      ; 确保弹窗尺寸为零
+        corfu-popupinfo-max-height 0))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
